@@ -1,0 +1,2 @@
+class TileBag < ApplicationRecord
+end
