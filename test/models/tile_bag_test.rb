@@ -2,6 +2,7 @@ require "test_helper"
 
 describe TileBag do
   let(:empty_bag) { tile_bags(:empty) }
+  let(:full_bag) { tile_bags(:full) }
 
   describe "attributes" do
     it "must have a tiles attribute" do
@@ -12,6 +13,10 @@ describe TileBag do
   describe "validations" do
     it "must be valid for empty bag" do
       value(empty_bag).must_be :valid?
+    end
+
+    it "must be valid for full bag" do
+      value(full_bag).must_be :valid?
     end
   end
 end
