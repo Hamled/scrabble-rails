@@ -23,4 +23,12 @@ describe TileBag do
       value(tile_bags(:non_letters)).wont_be :valid?
     end
   end
+
+  describe "#tiles" do
+    it "starts with a full set of tiles by default" do
+      bag = TileBag.create!
+
+      value(bag.tiles).must_equal full_bag.tiles
+    end
+  end
 end
