@@ -8,8 +8,15 @@ TILE_COUNTS = {
   'Y' => 2, 'Z' => 1,
 }
 %>
+
+# Valid fixtures
 empty:
   tiles: ''
 
 full:
   tiles: <%= TILE_COUNTS.map { |letter, count| letter * count }.sum %>
+
+
+# Invalid fixtures
+non_letters:
+  tiles: 'ABCDEF123'
