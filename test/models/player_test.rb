@@ -32,5 +32,14 @@ describe Player do
       player.tile_rack = nil
       value(player).wont_be :valid?
     end
+
+    it "must have a maximum of 7 tiles in its tile rack" do
+      # Sanity check
+      value(full_player.tile_rack.length).must_equal 7
+
+      full_player.tile_rack += 'A'
+
+      value(full_player).wont_be :valid?
+    end
   end
 end
