@@ -41,5 +41,11 @@ describe Player do
 
       value(full_player).wont_be :valid?
     end
+
+    it "must have only letters in its tile rack" do
+      full_player.tile_rack = 'ABC123'
+
+      value(full_player).wont_be :valid?
+    end
   end
 end
