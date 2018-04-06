@@ -1,0 +1,7 @@
+empty_rack:
+  name: Player Empty
+  tile_rack: ''
+
+full_rack:
+  name: Player Full
+  tile_rack: 'ABCDEFG'
