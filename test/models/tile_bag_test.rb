@@ -31,4 +31,19 @@ describe TileBag do
       value(bag.tiles).must_equal full_bag.tiles
     end
   end
+
+  describe "#shake!" do
+    it "reorders the tiles in the bag" do
+      orig_tiles = full_bag.tiles.dup
+
+      full_bag.shake!
+
+      # There is a chance this test could have a false negative
+      # if the actual result of randomly reordering the tiles
+      # matches the origin ordering
+      value(full_bag.tiles).wont_equal orig_tiles
+
+      value(full_bag.tiles.chars.sort.join).must_equal orig_tiles.chars.sort.join
+    end
+  end
 end

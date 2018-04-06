@@ -19,6 +19,11 @@ class TileBag < ApplicationRecord
     end
   end
 
+  def shake!
+    self.tiles = tiles.chars.shuffle.join
+    save!
+  end
+
   private
 
   def tiles_must_contain_only_letters
