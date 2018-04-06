@@ -24,6 +24,15 @@ class TileBag < ApplicationRecord
     save!
   end
 
+  def draw!(n)
+    raise OutOfTilesError.new if tiles.blank?
+
+    drawn_tiles = tiles.slice!(0, n)
+    save!
+
+    return drawn_tiles
+  end
+
   private
 
   def tiles_must_contain_only_letters

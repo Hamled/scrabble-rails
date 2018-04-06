@@ -1,0 +1,2 @@
+class OutOfTilesError < StandardError
+end

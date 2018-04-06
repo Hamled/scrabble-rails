@@ -46,4 +46,50 @@ describe TileBag do
       value(full_bag.tiles.chars.sort.join).must_equal orig_tiles.chars.sort.join
     end
   end
+
+  describe "#draw!" do
+    let(:num_tiles) { rand(1..7) }
+
+    it "returns a string with N letters" do
+      result = full_bag.draw!(num_tiles)
+
+      value(result).must_be_kind_of String
+      value(result.length).must_equal num_tiles
+
+      value(result).must_match /^[A-Z]+$/
+    end
+
+    it "removes each returned tile from the bag" do
+      orig_tiles = full_bag.tiles.dup
+
+      result = full_bag.draw!(num_tiles)
+
+      # It must have removed N tiles from the bag
+      value(full_bag.tiles.length).must_equal orig_tiles.length - result.length
+
+      # The tiles it removed are exactly the tiles that were returned
+      value((full_bag.tiles.chars + result.chars).sort).must_equal orig_tiles.chars.sort
+    end
+
+    it "returns fewer tiles when there are not enough tiles" do
+      # First draw enough tiles from a full bag to have insufficient numbers
+      pre_draw_count = full_bag.tiles.length - num_tiles
+      full_bag.draw!(pre_draw_count)
+
+      remaining_tiles = full_bag.tiles.dup
+      value(remaining_tiles.length).must_equal num_tiles # Sanity check
+
+      # Next, draw one more than the remaining number of tiles
+      result = full_bag.draw!(num_tiles + 1)
+
+      value(result.length).must_equal num_tiles
+      value(result.chars.sort).must_equal remaining_tiles.chars.sort
+    end
+
+    it "raises OutOfTilesError if there are no tiles left" do
+      value(proc {
+        empty_bag.draw!(1)
+      }).must_raise OutOfTilesError
+    end
+  end
 end

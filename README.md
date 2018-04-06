@@ -6,6 +6,7 @@
     1. `TileBag`
         1. `tiles` (String)
         1. `shake!` method (shuffles tiles)
+        1. `draw!` method (takes number, removes and returns up to that many tiles from bag)
     1. `Player`
         1. `has_many :turns`
         1. `name` (String)
