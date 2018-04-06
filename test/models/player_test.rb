@@ -27,5 +27,10 @@ describe Player do
       player.name = nil
       value(player).wont_be :valid?
     end
+
+    it "must be invalid without a tile rack" do
+      player.tile_rack = nil
+      value(player).wont_be :valid?
+    end
   end
 end
