@@ -48,4 +48,19 @@ describe Player do
       value(full_player).wont_be :valid?
     end
   end
+
+  describe "#full_rack?" do
+    it "returns true when tile rack is full" do
+      value(full_player.full_rack?).must_equal true
+    end
+
+    it "returns false when tile rack is not full" do
+      value(player.full_rack?).must_equal false
+
+      "ABCDEF".chars.each do |letter|
+        player.tile_rack += letter
+        value(player.full_rack?).must_equal false
+      end
+    end
+  end
 end
