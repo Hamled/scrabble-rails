@@ -10,7 +10,23 @@ class Player < ApplicationRecord
     tile_rack.length >= TILE_RACK_SIZE
   end
 
+  def draw_tiles!(tile_bag)
+    return if full_rack?
+
+    # shake?
+
+    self.tile_rack += tile_bag.draw!(tiles_needed)
+    save!
+  rescue OutOfTilesError
+  end
+
   private
+
+  def tiles_needed
+    return 0 if full_rack?
+
+    TILE_RACK_SIZE - tile_rack.length
+  end
 
   def tile_rack_must_contain_only_letters
     if /[^A-Z]/.match? tile_rack
