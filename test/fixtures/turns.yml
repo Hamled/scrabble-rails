@@ -1,3 +1,11 @@
 angie_one:
   word: 'CRACKER'
   player: angie
+
+candida_one:
+  word: 'PIG'
+  player: candida
+
+candida_two:
+  word: 'LIZARD'
+  player: candida

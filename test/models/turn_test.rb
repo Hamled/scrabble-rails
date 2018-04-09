@@ -72,4 +72,51 @@ describe Turn do
       value(turn('').score).must_be_nil
     end
   end
+
+  describe ".highest_scoring" do
+    let(:candida) { players(:candida) }
+    let(:angie) { players(:angie) }
+
+    it "returns the highest scoring turn" do
+      value(candida.turns.highest_scoring.word).must_equal 'LIZARD'
+
+      candida.turns.create(word: 'APPLE')
+
+      value(candida.turns.highest_scoring.word).must_equal 'LIZARD'
+    end
+
+    it "returns a seven letter word, if tied" do
+      candida.turns.create(word: 'ORATORY')
+      candida.turns.create(word: 'ZQZQZQ')
+
+      value(candida.turns.highest_scoring.word).must_equal 'ORATORY'
+    end
+
+    it "returns word with fewest letters, if tied" do
+      candida.turns.create(word: 'JUKES') # Scores same as LIZARD
+
+      value(candida.turns.highest_scoring.word).must_equal 'JUKES'
+    end
+
+    it "returns word sorted earlier, if tied for score and length" do
+      candida.turns.create(word: 'HACKED') # Scores same as LIZARD
+
+      value(candida.turns.highest_scoring.word).must_equal 'LIZARD'
+
+      value(candida.turns.order(id: :desc).highest_scoring.word).must_equal 'HACKED'
+    end
+
+    it "returns nil if no turns in scope" do
+      Turn.destroy_all
+
+      value(Turn.all.highest_scoring).must_be_nil
+      value(angie.turns.highest_scoring).must_be_nil
+    end
+
+    it "returns the only turn if just one is in scope" do
+      value(angie.turns.count).must_equal 1 # Sanity check
+
+      value(angie.turns.highest_scoring).must_equal angie.turns.first
+    end
+  end
 end

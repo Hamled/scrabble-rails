@@ -9,3 +9,7 @@ full_rack:
 angie:
   name: Angie
   tile_rack: 'ORCHARD'
+
+candida:
+  name: Cándida
+  tile_rack: 'WORDSTM'

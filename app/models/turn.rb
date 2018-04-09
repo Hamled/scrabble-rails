@@ -22,4 +22,29 @@ class Turn < ApplicationRecord
       word_score + letter_score
     end
   end
+
+  # Class method instead of a scope because this does not return a relation
+  def self.highest_scoring
+    all.reduce do |best_turn, turn|
+      if turn.score > best_turn.score
+        turn
+      elsif best_turn.score > turn.score
+        best_turn
+      else
+        # Tie-breaking logic
+        best_len = best_turn.word.length
+        turn_len = turn.word.length
+
+        if best_len == 7
+          best_turn
+        elsif turn_len == 7
+          turn
+        elsif best_len == turn_len
+          best_turn
+        else
+          [best_turn, turn].min_by { |t| t.word.length }
+        end
+      end
+    end
+  end
 end
