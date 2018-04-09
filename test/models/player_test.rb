@@ -12,6 +12,10 @@ describe Player do
     it "must have a tile rack" do
       value(player).must_respond_to :tile_rack
     end
+
+    it "must have a list of turns" do
+      value(player).must_respond_to :turns
+    end
   end
 
   describe "validations" do

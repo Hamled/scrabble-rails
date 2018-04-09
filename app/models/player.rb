@@ -1,6 +1,8 @@
 class Player < ApplicationRecord
   TILE_RACK_SIZE = 7
 
+  has_many :turns
+
   # Validations
   validates :name, presence: true
   validates :tile_rack, length: { minimum: 0, maximum: TILE_RACK_SIZE }
