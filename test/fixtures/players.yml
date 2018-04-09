@@ -5,3 +5,7 @@ empty_rack:
 full_rack:
   name: Player Full
   tile_rack: 'ABCDEFG'
+
+angie:
+  name: Angie
+  tile_rack: 'ORCHARD'
