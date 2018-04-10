@@ -22,6 +22,29 @@ class Player < ApplicationRecord
   rescue OutOfTilesError
   end
 
+  def play!(word)
+    unless word.is_a?(String) && (1..TILE_RACK_SIZE).include?(word.length)
+      raise ArgumentError.new('Invalid word')
+    end
+
+    new_rack = tile_rack.chars.dup
+    word.chars.each do |letter|
+      index = new_rack.index(letter)
+      raise ArgumentError.new("Tile rack missing letter #{letter}") unless index
+
+      new_rack.delete_at(index)
+    end
+
+    new_turn = nil
+    transaction do
+      self.tile_rack = new_rack.join
+      new_turn = turns.create(word: word)
+      save!
+    end
+
+    return new_turn
+  end
+
   private
 
   def tiles_needed

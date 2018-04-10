@@ -128,4 +128,44 @@ describe Player do
       value(full_player.tile_rack).must_equal orig_rack
     end
   end
+
+  describe "#play!" do
+    let(:angie) { players(:angie) }
+
+    it "plays the given word by creating a new turn with that word" do
+      num_turns = angie.turns.count
+
+      angie.play!('ORCHARD')
+
+      value(angie.turns.count).must_equal (num_turns + 1)
+      value(angie.turns.last.word).must_equal 'ORCHARD'
+    end
+
+    it "removes the played tiles from the tile rack" do
+      orig_rack = angie.tile_rack.dup
+
+      angie.play!('HARD')
+
+      value(angie.tile_rack.length).must_equal (orig_rack.length - 4)
+      value((angie.tile_rack.chars + 'HARD'.chars).sort).must_equal orig_rack.chars.sort
+    end
+
+    it "raises ArgumentError for empty, non-string, or unscorable" do
+      BAD_INPUTS = [nil, '', 10, '^%$', ' ', 'MUCHTOOLONG']
+
+      BAD_INPUTS.each do |input|
+        value(proc {
+          angie.play!(input)
+        }).must_raise ArgumentError
+      end
+    end
+
+    it "raises ArgumentError for word that cannot be played" do
+      value(angie.tile_rack).must_equal 'ORCHARD' # Sanity check
+
+      value(proc {
+        angie.play!('BONES')
+      }).must_raise ArgumentError
+    end
+  end
 end
