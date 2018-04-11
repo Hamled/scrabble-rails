@@ -1,0 +1,26 @@
+<h1>Player <%= @player.name %></h1>
+
+<h2>Current tile rack:</h2>
+<% @player.tile_rack.chars.each do |tile| %>
+  <div class="tile">
+    <p><%= tile %></p>
+  </div>
+<% end %>
+
+<h2>Turn history:</h2>
+<h3>Best word: <%= display_word @player.turns.highest_scoring %></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Word</th>
+      <th>Score</ht>
+    </tr>
+  </thead>
+  <% @player.turns.order(id: :desc).each do |turn| %>
+    <tr>
+      <td><%= display_word turn %></td>
+      <td><%= turn.score %></td>
+    </tr>
+  <% end%>
+</table>
