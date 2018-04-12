@@ -7,6 +7,11 @@
   </div>
 <% end %>
 
+<%= form_with url: player_play_path(@player) do |f| %>
+  <%= f.text_field :word %>
+  <%= f.submit "Play word" %>
+<% end %>
+
 <h2>Turn history:</h2>
 <h3>Best word: <%= display_word @player.turns.highest_scoring %></h3>
 
